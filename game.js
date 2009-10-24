@@ -26,22 +26,23 @@ Game.prototype.eachRow = function (callback) {
     });
 };
 
+Game.prototype.mapCells = function (fn) {
+    return this.board.map(function (cells, i) {
+        return cells.map(function (cell, j) {
+            return fn(i, j);
+        });
+    });
+};
+
 Game.prototype.nextGeneration = function () {
     var self      = this;
     var rowMatrix = [];
 
-    this.eachRow(function (cells, i) {
-        var cellMatrix = [];
-
-        cells.eachCell(function (cell, j) {
-            var newCell = self.cellSurvives(i, j) ? 1 : 0;
-            cellMatrix.push(newCell);
-        });
-        
-        rowMatrix.push(cellMatrix);
+    var newMatrix = this.mapCells(function (i, j) {
+        return self.cellSurvives(i, j) ? 1 : 0;
     });
 
-    return new Game(rowMatrix);
+    return new Game(newMatrix);
 };
 
 Game.prototype.upperLeft = function (x, y) {
