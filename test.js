@@ -41,6 +41,19 @@ expectedGeneration = new Game([
 f.ok(Game.compare(nextGeneration, expectedGeneration), "Test nextGeneration(); third rule");
 
 
+nextGeneration     = new Game([
+    [0, 1, 0],
+    [1, 0, 1],
+    [0, 0, 0],
+]).nextGeneration();
+expectedGeneration = new Game([
+    [0, 1, 0],
+    [0, 1, 0],
+    [0, 0, 0],
+]);
+f.ok(Game.compare(nextGeneration, expectedGeneration), "Test nextGeneration(); fourth rule");
+
+
 f.ok(game.neighboursNumber(1, 0) === 1, "Test neighboursNumber();");
 
 f.testDone();
