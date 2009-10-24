@@ -38,8 +38,6 @@ expectedGeneration = new Game([
     [1, 0, 1],
     [0, 0, 0],
 ]);
-
-console.log(nextGeneration);
 f.ok(Game.compare(nextGeneration, expectedGeneration), "Test nextGeneration(); third rule");
 
 
