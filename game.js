@@ -1,4 +1,10 @@
 
+function zip(array1, array2) {
+    return array1.map(function(el, i) {
+        return [el, array2[i]];
+    });
+}
+
 var Game = function (boardMatrix) {
 
     function applyGameRules(element, neighbours) {
@@ -25,7 +31,7 @@ var Game = function (boardMatrix) {
         size: function() {
             return boardMatrix.length;
         },
-        zip: function(otherGame) {
+        zipGame: function(otherGame) {
             var results = [];
             for (var i=0; i<this.size(); i++) {
                 for (var j=0; j<this.size(); j++) {
@@ -34,40 +40,38 @@ var Game = function (boardMatrix) {
             }
             return results;
         },
-        foreachCell:function(fn) {
-            var rows = [];
-            for (var i=0; i<this.size(); i++) {
-                var cells = [];
-                for (var j=0; j<this.size(); j++) {
-                    cells.push(fn(this.elementAt(i,j), this.neighbours(i,j)));
-                }
-                rows.push(cells);
-            }
-            return rows;
+        foreachRow: function(fn) {
+            return boardMatrix.map(fn);
+        },
+        foreachCell: function(fn) {
+            var self = this;
+            return this.foreachRow(function (row, i) {
+                return row.map(function (cell, j) {
+                    return fn(cell, self.neighbours(i,j));
+                });
+            });
         },
         compare: function(otherGame) {
             if (this.size() !== otherGame.size()) {
                 return false;
             }
 
-            return this.zip(otherGame)
+            return this.zipGame(otherGame)
                        .every(function(gamePair) {
                             return gamePair[0] === gamePair[1];
                         });
         },
         neighbours: function(line, column) {
-            var deltaLine = [-1, -1, -1, 0, 1, 1, 1, 0];
-            var deltaColumn = [-1, 0, 1, 1, 1, 0, -1, -1];
-            var count = 0;
+            var lines = [-1, -1, -1, 0, 1, 1, 1, 0].map(function(d){return line+d;});
+            var columns = [-1, 0, 1, 1, 1, 0, -1, -1].map(function(d){return column+d});
+            var self = this;
             
-            for(var i=0; i<deltaLine.length; i++) {
-                currentLine = line + deltaLine[i];
-                currentColumn = column + deltaColumn[i];
-                if(this.elementAt(currentLine, currentColumn) == 1) {
-                    count += 1;
+            return zip(lines, columns).reduce(function(count, pair) {
+                if(self.elementAt(pair[0], pair[1]) == 1) {
+                    return count + 1;
                 }
-            }
-            return count;
+                return count;
+            }, 0);
         }
     };
 };
