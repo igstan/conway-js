@@ -84,22 +84,23 @@ Game.prototype.neighboursNumber = function (x, y) {
     return this.neighboursOf(x, y).sum();
 };
 
+(function () {
+    var A_DEAD_CELL           = 0,
+        A_LIVE_CELL           = 1,
+        WITH_TWO_NEIGHBOURS   = 2,
+        WITH_THREE_NEIGHBOURS = 3,
+        BECOMES_ALIVE         = 1;;
+
+    Game.rules = {0:{}, 1:{}};
+
+    Game.rules[A_DEAD_CELL][WITH_THREE_NEIGHBOURS] = BECOMES_ALIVE;
+    Game.rules[A_LIVE_CELL][WITH_TWO_NEIGHBOURS]   = BECOMES_ALIVE;
+    Game.rules[A_LIVE_CELL][WITH_THREE_NEIGHBOURS] = BECOMES_ALIVE;
+})();
+
 Game.prototype.newCellValue = function (currentCell, x, y) {
-    var neighboursNumber = this.neighboursNumber(x, y);
-
-    if (currentCell) {
-        if (neighboursNumber < 2 || neighboursNumber > 3) {
-            return 0;
-        } else {
-            return 1;
-        }
-    } else {
-        if (neighboursNumber === 3) {
-            return 1;
-        }
-    }
-
-    return 0;
+    var totalNeighbours = this.neighboursNumber(x, y);
+    return Game.rules[currentCell][totalNeighbours] || 0;
 };
 
 var render = function (game) {
