@@ -1,3 +1,8 @@
+Array.prototype.sum = function () {
+    return this.reduce(function (a,b) (a||0) + (b||0));
+};
+
+
 var Game = function (board) {
     this.board = board;
 };
@@ -79,9 +84,7 @@ Game.prototype.neighboursOf = function (x, y) {
 };
 
 Game.prototype.neighboursNumber = function (x, y) {
-    return this.neighboursOf(x, y)
-               .map(function (a) a || 0)
-               .reduce(function (a, b) a + b);
+    return this.neighboursOf(x, y).sum();
 };
 
 Game.prototype.cellSurvives = function (x, y) {
