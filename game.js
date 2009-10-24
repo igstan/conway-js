@@ -39,13 +39,6 @@ Game.prototype.elementAt = function (x, y) {
     return this.board[x] ? this.board[x][y] : undefined;
 };
 
-Game.prototype.eachRow = function (callback) {
-    this.board.map(function (row, i, rows) {
-        row.eachCell = row.map;
-        callback(row, i, rows);
-    });
-};
-
 Game.prototype.mapCells = function (fn) {
     return this.board.map(function (cells, i) {
         return cells.map(function (cell, j) {
