@@ -2,6 +2,14 @@ var Game = function (board) {
     this.board = board;
 };
 
+Game.compare = function (gameA, gameB) {
+    return gameA.board.every(function (row, i) {
+        return row.every(function (cell, j) {
+            return gameA.elementAt(i, j) === gameB.elementAt(i, j);
+        });
+    });
+};
+
 Game.prototype.elementAt = function (x, y) {
     return this.board[x][y];
 };
