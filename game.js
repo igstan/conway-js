@@ -24,14 +24,10 @@ Game.prototype.eachRow = function (callback) {
 var render = function (game) {
     var rows = [];
 
-    game.eachRow(function (row, i) {
-        var cells = "";
-
-        row.eachCell(function (cell, i) {
-            cells += (cell === 1) ? "X" : "-";
-        });
-
-        rows.push(cells);
+    game.eachRow(function (cells, i) {
+        rows.push(cells.reduce(function (accumulator, cell) {
+            return accumulator + ((cell === 1) ? "X" : "-");
+        }, ""));
     });
 
     return rows.join("\n");
