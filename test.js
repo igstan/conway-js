@@ -1,5 +1,9 @@
 var f = fireunit;
 
+
+f.compare([1, 2].sum(), 3, "Test Array.prototype.sum();");
+f.compare([undefined, 2].sum(), 2, "Test Array.prototype.sum(); with undefined elements");
+
 var game = new Game([
     [1, 0],
     [0, 0],
