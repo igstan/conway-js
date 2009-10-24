@@ -8,6 +8,8 @@ f.ok(game.elementAt(0, 0) === 1, "Test elementAt();");
 
 f.compare("X-\n--", render(game), "Test render();");
 
+f.ok(Game.compare(game, game), "Test Game.compare();");
+
 f.testDone();
 
 window.addEventListener("DOMContentLoaded", function () {
