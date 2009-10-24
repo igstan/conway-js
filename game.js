@@ -36,7 +36,7 @@ Game.prototype.mapCells = function (fn) {
 
 Game.prototype.nextGeneration = function () {
     var self  = this;
-    var board = this.mapCells(function (cell, i, j) self.newCellValue(cell, i, j));
+    var board = this.mapCells(function (cell, i, j) self.applySurvivalRules(cell, i, j));
 
     return new Game(board);
 };
@@ -98,7 +98,7 @@ Game.prototype.neighboursNumber = function (x, y) {
     Game.rules[A_LIVE_CELL][WITH_THREE_NEIGHBOURS] = BECOMES_ALIVE;
 })();
 
-Game.prototype.newCellValue = function (currentCell, x, y) {
+Game.prototype.applySurvivalRules = function (currentCell, x, y) {
     var totalNeighbours = this.neighboursNumber(x, y);
     return Game.rules[currentCell][totalNeighbours] || 0;
 };
