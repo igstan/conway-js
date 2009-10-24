@@ -39,20 +39,48 @@ Game.prototype.nextGeneration = function () {
     return new Game(rowMatrix);
 };
 
+Game.prototype.upperLeft = function (x, y) {
+    return this.elementAt(x - 1, y - 1);
+};
+
+Game.prototype.upper = function (x, y) {
+    return this.elementAt(x, y - 1);
+};
+
+Game.prototype.upperRight = function (x, y) {
+    return this.elementAt(x + 1, y - 1);
+};
+
+Game.prototype.middleLeft = function (x, y) {
+    return this.elementAt(x - 1, y);
+};
+
+Game.prototype.middleRight = function (x, y) {
+    return this.elementAt(x + 1, y);
+};
+
+Game.prototype.lowerLeft = function (x, y) {
+    return this.elementAt(x - 1, y + 1);
+};
+
+Game.prototype.lower = function (x, y) {
+    return this.elementAt(x, y + 1);
+};
+
+Game.prototype.lowerRight = function (x, y) {
+    return this.elementAt(x + 1, y + 1);
+};
+
 Game.prototype.neighboursNumber = function (x, y) {
     return [
-        this.elementAt(x - 1, y - 1),
-        this.elementAt(x,     y - 1),
-        this.elementAt(x + 1, y - 1),
-
-        this.elementAt(x - 1, y),
-        this.elementAt(x,     y),
-        this.elementAt(x + 1, y),
-
-        this.elementAt(x - 1, y + 1),
-        this.elementAt(x,     y + 1),
-        this.elementAt(x + 1, y + 1),
-
+        this.upperLeft(x, y),
+        this.upper(x, y),
+        this.upperRight(x, y),
+        this.middleLeft(x, y),
+        this.middleRight(x, y),
+        this.lowerLeft(x, y),
+        this.lower(x, y),
+        this.lowerRight(x, y)
     ].map(function (a) a || 0)
      .reduce(function (a, b) a + b);
 };
