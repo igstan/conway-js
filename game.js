@@ -6,18 +6,25 @@ var Game = function (board) {
     this.board = board;
 };
 
+Game.DIED_CELL = 0;
+Game.LIVE_CELL = 1;
+
 (function () {
-    var A_DEAD_CELL           = 0,
-        A_LIVE_CELL           = 1,
-        WITH_TWO_NEIGHBOURS   = 2,
+    var WITH_TWO_NEIGHBOURS   = 2,
         WITH_THREE_NEIGHBOURS = 3,
-        BECOMES_ALIVE         = 1;;
+        ALL_OTHER_CELLS       = '*',
+        A_DEAD_CELL           = Game.DIED_CELL,
+        A_LIVE_CELL           = Game.LIVE_CELL,
+        BECOMES_ALIVE         = Game.LIVE_CELL,
+        SURVIVES              = Game.LIVE_CELL,
+        DIE                   = Game.DIED_CELL;
 
     Game.rules = {0:{}, 1:{}};
 
     Game.rules[A_DEAD_CELL][WITH_THREE_NEIGHBOURS] = BECOMES_ALIVE;
-    Game.rules[A_LIVE_CELL][WITH_TWO_NEIGHBOURS]   = BECOMES_ALIVE;
-    Game.rules[A_LIVE_CELL][WITH_THREE_NEIGHBOURS] = BECOMES_ALIVE;
+    Game.rules[A_LIVE_CELL][WITH_TWO_NEIGHBOURS]   = SURVIVES;
+    Game.rules[A_LIVE_CELL][WITH_THREE_NEIGHBOURS] = SURVIVES;
+    Game.rules[ALL_OTHER_CELLS]                    = DIE;
 })();
 
 Game.compare = function (gameA, gameB) {
@@ -56,7 +63,7 @@ Game.prototype.nextGeneration = function () {
 
 Game.prototype.applySurvivalRules = function (currentCell, x, y) {
     var totalNeighbours = this.neighboursNumber(x, y);
-    return Game.rules[currentCell][totalNeighbours] || 0;
+    return Game.rules[currentCell][totalNeighbours] || Game.DIED_CELL;
 };
 
 Game.prototype.neighboursNumber = function (x, y) {
