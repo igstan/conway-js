@@ -5,6 +5,7 @@ var game = new Game([
     [0, 0],
 ]);
 f.ok(game.elementAt(0, 0) === 1, "Test elementAt();");
+f.ok(game.elementAt(-1, -1) === undefined, "Test elementAt(); returns undefined for negative values");
 
 f.compare("X-\n--", render(game), "Test render();");
 
