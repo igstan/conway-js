@@ -11,7 +11,7 @@ Game.compare = function (gameA, gameB) {
 };
 
 Game.prototype.elementAt = function (x, y) {
-    return this.board[x][y];
+    return this.board[x] ? this.board[x][y] : undefined;
 };
 
 Game.prototype.eachRow = function (callback) {
