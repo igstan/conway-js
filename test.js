@@ -6,4 +6,6 @@ var game = new Game([
 ]);
 f.ok(game.elementAt(0, 0) === 1, "Test elementAt();");
 
+f.compare("X-\n--", render(game), "Test render();");
+
 f.testDone();
