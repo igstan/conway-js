@@ -35,14 +35,10 @@ Game.prototype.mapCells = function (fn) {
 };
 
 Game.prototype.nextGeneration = function () {
-    var self      = this;
-    var rowMatrix = [];
+    var self  = this;
+    var board = this.mapCells(function (i, j) self.newCellValue(i, j));
 
-    var newMatrix = this.mapCells(function (i, j) {
-        return self.cellSurvives(i, j) ? 1 : 0;
-    });
-
-    return new Game(newMatrix);
+    return new Game(board);
 };
 
 Game.prototype.upperLeft = function (x, y) {
@@ -88,23 +84,23 @@ Game.prototype.neighboursNumber = function (x, y) {
     return this.neighboursOf(x, y).sum();
 };
 
-Game.prototype.cellSurvives = function (x, y) {
+Game.prototype.newCellValue = function (x, y) {
     var neighboursNumber = this.neighboursNumber(x, y);
     var isAlive          = this.elementAt(x, y);
 
     if (isAlive) {
         if (neighboursNumber < 2 || neighboursNumber > 3) {
-            return false;
+            return 0;
         } else {
-            return true;
+            return 1;
         }
     } else {
         if (neighboursNumber === 3) {
-            return true;
+            return 1;
         }
     }
 
-    return false;
+    return 0;
 };
 
 var render = function (game) {
