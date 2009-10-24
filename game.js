@@ -86,6 +86,10 @@ Game.prototype.neighboursNumber = function (x, y) {
 
 Game.prototype.cellSurvives = function (x, y) {
     var neighboursNumber = this.neighboursNumber(x, y);
+
+    if (neighboursNumber < 2) {
+        return false;
+    }
 };
 
 var render = function (game) {
