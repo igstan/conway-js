@@ -113,7 +113,7 @@ Game.prototype.lowerRight = function (x, y) {
 
 
 var render = function (game) {
-    return game.mapCells(function (cell, i, j) cell === 1 ? "X" : "-")
+    return game.mapCells(function (cell, i, j) cell === 1 ? "<span>&diams;</span>" : "-")
                .map(function (row) row.join(""))
                .join("\n");
 };
