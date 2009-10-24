@@ -64,9 +64,19 @@ f.testDone();
 
 window.addEventListener("DOMContentLoaded", function () {
     var game = new Game([
-        [1, 0, 1],
-        [0, 0, 1],
-        [1, 0, 1],
+        [0,0,0,0,0,0],
+        [0,0,0,0,0,0],
+        [0,0,1,1,1,0],
+        [0,1,1,1,0,0],
+        [0,0,0,0,0,0],
+        [0,0,0,0,0,0],
     ]);
+
     document.getElementById("panel").innerHTML = render(game);
+
+    document.getElementById("next").addEventListener("click", function () {
+        game = game.nextGeneration();
+        document.getElementById("panel").innerHTML = render(game);
+    }, false);
+
 }, false);
