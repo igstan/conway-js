@@ -71,18 +71,17 @@ Game.prototype.lowerRight = function (x, y) {
     return this.elementAt(x + 1, y + 1);
 };
 
+Game.prototype.neighboursOf = function (x, y) {
+    var neighbours = "upperLeft,upper,upperRight,middleLeft,middleRight,lowerLeft,lower,lowerRight";
+    var self = this;
+
+    return neighbours.split(",").map(function (fn) self[fn](x, y));
+};
+
 Game.prototype.neighboursNumber = function (x, y) {
-    return [
-        this.upperLeft(x, y),
-        this.upper(x, y),
-        this.upperRight(x, y),
-        this.middleLeft(x, y),
-        this.middleRight(x, y),
-        this.lowerLeft(x, y),
-        this.lower(x, y),
-        this.lowerRight(x, y)
-    ].map(function (a) a || 0)
-     .reduce(function (a, b) a + b);
+    return this.neighboursOf(x, y)
+               .map(function (a) a || 0)
+               .reduce(function (a, b) a + b);
 };
 
 Game.prototype.cellSurvives = function (x, y) {
