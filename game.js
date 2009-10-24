@@ -21,6 +21,46 @@ Game.prototype.eachRow = function (callback) {
     });
 };
 
+Game.prototype.nextGeneration = function () {
+    var self      = this;
+    var rowMatrix = [];
+
+    this.eachRow(function (cells, i) {
+        var cellMatrix = [];
+
+        cells.eachCell(function (cell, j) {
+            var newCell = self.cellSurvives(i, j) ? 1 : 0;
+            cellMatrix.push(newCell);
+        });
+        
+        rowMatrix.push(cellMatrix);
+    });
+
+    return new Game(rowMatrix);
+};
+
+Game.prototype.neighboursNumber = function (x, y) {
+    return [
+        this.elementAt(x - 1, y - 1),
+        this.elementAt(x,     y - 1),
+        this.elementAt(x + 1, y - 1),
+
+        this.elementAt(x - 1, y),
+        this.elementAt(x,     y),
+        this.elementAt(x + 1, y),
+
+        this.elementAt(x - 1, y + 1),
+        this.elementAt(x,     y + 1),
+        this.elementAt(x + 1, y + 1),
+
+    ].map(function (a) a || 0)
+     .reduce(function (a, b) a + b);
+};
+
+Game.prototype.cellSurvives = function (x, y) {
+    var neighboursNumber = this.neighboursNumber(x, y);
+};
+
 var render = function (game) {
     var rows = [];
 
