@@ -86,22 +86,18 @@ Game.prototype.neighboursNumber = function (x, y) {
 
 Game.prototype.cellSurvives = function (x, y) {
     var neighboursNumber = this.neighboursNumber(x, y);
-    var cell = this.elementAt(x, y);
+    var isAlive          = this.elementAt(x, y);
 
-    if (cell && neighboursNumber < 2) {
-        return false;
-    }
-
-    if (cell && neighboursNumber > 3) {
-        return false;
-    }
-
-    if (cell && (neighboursNumber === 2 || neighboursNumber === 3)) {
-        return true;
-    }
-
-    if (!cell && neighboursNumber === 3) {
-        return true;
+    if (isAlive) {
+        if (neighboursNumber < 2 || neighboursNumber > 3) {
+            return false;
+        } else {
+            return true;
+        }
+    } else {
+        if (neighboursNumber === 3) {
+            return true;
+        }
     }
 
     return false;
