@@ -36,7 +36,7 @@ Game.prototype.mapCells = function (fn) {
 
 Game.prototype.nextGeneration = function () {
     var self  = this;
-    var board = this.mapCells(function (cell, i, j) self.newCellValue(i, j));
+    var board = this.mapCells(function (cell, i, j) self.newCellValue(cell, i, j));
 
     return new Game(board);
 };
@@ -84,11 +84,10 @@ Game.prototype.neighboursNumber = function (x, y) {
     return this.neighboursOf(x, y).sum();
 };
 
-Game.prototype.newCellValue = function (x, y) {
+Game.prototype.newCellValue = function (currentCell, x, y) {
     var neighboursNumber = this.neighboursNumber(x, y);
-    var isAlive          = this.elementAt(x, y);
 
-    if (isAlive) {
+    if (currentCell) {
         if (neighboursNumber < 2 || neighboursNumber > 3) {
             return 0;
         } else {
