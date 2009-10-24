@@ -10,6 +10,10 @@ f.compare("X-\n--", render(game), "Test render();");
 
 f.ok(Game.compare(game, game), "Test Game.compare();");
 
+var nextGeneration     = game.nextGeneration();
+var expectedGeneration = new Game([[0, 0], [0, 0]]);
+f.ok(Game.compare(nextGeneration, expectedGeneration), "Test nextGeneration();");
+
 f.testDone();
 
 window.addEventListener("DOMContentLoaded", function () {
