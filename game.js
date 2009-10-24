@@ -90,6 +90,12 @@ Game.prototype.cellSurvives = function (x, y) {
     if (neighboursNumber < 2) {
         return false;
     }
+
+    if (neighboursNumber > 3) {
+        return false;
+    }
+
+    return true;
 };
 
 var render = function (game) {
