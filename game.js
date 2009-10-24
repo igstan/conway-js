@@ -100,6 +100,10 @@ Game.prototype.cellSurvives = function (x, y) {
         return true;
     }
 
+    if (!cell && neighboursNumber === 3) {
+        return true;
+    }
+
     return false;
 };
 
