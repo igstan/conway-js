@@ -13,7 +13,20 @@ f.ok(Game.compare(game, game), "Test Game.compare();");
 
 var nextGeneration     = game.nextGeneration();
 var expectedGeneration = new Game([[0, 0], [0, 0]]);
-f.ok(Game.compare(nextGeneration, expectedGeneration), "Test nextGeneration();");
+f.ok(Game.compare(nextGeneration, expectedGeneration), "Test nextGeneration(); first rule");
+
+nextGeneration     = new Game([
+    [1, 1, 1],
+    [1, 1, 1],
+    [1, 1, 1],
+]).nextGeneration();
+expectedGeneration = new Game([
+    [1, 0, 1],
+    [0, 0, 0],
+    [1, 0, 1],
+]);
+f.ok(Game.compare(nextGeneration, expectedGeneration), "Test nextGeneration(); second rule");
+
 
 f.ok(game.neighboursNumber(1, 0) === 1, "Test neighboursNumber();");
 
