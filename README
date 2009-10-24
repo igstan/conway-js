@@ -1,0 +1,9 @@
+Conway's Game of Life
+=====================
+
+JavaScript sources for a code retreat session held on October 24th, 2009 in
+Bucharest. You will need Firebug and FireUnit in order to run the tests.
+
+- http://en.wikipedia.org/wiki/Conway's_Game_of_Life
+- http://getfirebug.com/
+- http://fireunit.org/
