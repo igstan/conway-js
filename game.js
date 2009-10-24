@@ -29,14 +29,14 @@ Game.prototype.eachRow = function (callback) {
 Game.prototype.mapCells = function (fn) {
     return this.board.map(function (cells, i) {
         return cells.map(function (cell, j) {
-            return fn(i, j);
+            return fn(cell, i, j);
         });
     });
 };
 
 Game.prototype.nextGeneration = function () {
     var self  = this;
-    var board = this.mapCells(function (i, j) self.newCellValue(i, j));
+    var board = this.mapCells(function (cell, i, j) self.newCellValue(i, j));
 
     return new Game(board);
 };
@@ -104,13 +104,7 @@ Game.prototype.newCellValue = function (x, y) {
 };
 
 var render = function (game) {
-    var rows = [];
-
-    game.eachRow(function (cells, i) {
-        rows.push(cells.reduce(function (accumulator, cell) {
-            return accumulator + ((cell === 1) ? "X" : "-");
-        }, ""));
-    });
-
-    return rows.join("\n");
+    return game.mapCells(function (cell, i, j) cell === 1 ? "X" : "-")
+               .map(function (row) row.join(""))
+               .join("\n");
 };
