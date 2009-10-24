@@ -14,6 +14,8 @@ var nextGeneration     = game.nextGeneration();
 var expectedGeneration = new Game([[0, 0], [0, 0]]);
 f.ok(Game.compare(nextGeneration, expectedGeneration), "Test nextGeneration();");
 
+f.ok(game.neighboursNumber(1, 0) === 1, "Test neighboursNumber();");
+
 f.testDone();
 
 window.addEventListener("DOMContentLoaded", function () {
