@@ -2,10 +2,23 @@ Array.prototype.sum = function () {
     return this.reduce(function (a,b) (a||0) + (b||0));
 };
 
-
 var Game = function (board) {
     this.board = board;
 };
+
+(function () {
+    var A_DEAD_CELL           = 0,
+        A_LIVE_CELL           = 1,
+        WITH_TWO_NEIGHBOURS   = 2,
+        WITH_THREE_NEIGHBOURS = 3,
+        BECOMES_ALIVE         = 1;;
+
+    Game.rules = {0:{}, 1:{}};
+
+    Game.rules[A_DEAD_CELL][WITH_THREE_NEIGHBOURS] = BECOMES_ALIVE;
+    Game.rules[A_LIVE_CELL][WITH_TWO_NEIGHBOURS]   = BECOMES_ALIVE;
+    Game.rules[A_LIVE_CELL][WITH_THREE_NEIGHBOURS] = BECOMES_ALIVE;
+})();
 
 Game.compare = function (gameA, gameB) {
     return gameA.board.every(function (row, i) {
@@ -41,6 +54,24 @@ Game.prototype.nextGeneration = function () {
     return new Game(board);
 };
 
+Game.prototype.applySurvivalRules = function (currentCell, x, y) {
+    var totalNeighbours = this.neighboursNumber(x, y);
+    return Game.rules[currentCell][totalNeighbours] || 0;
+};
+
+Game.prototype.neighboursNumber = function (x, y) {
+    return this.neighboursOf(x, y).sum();
+};
+
+Game.prototype.neighboursOf = function (x, y) {
+    var neighbours = "upperLeft,upper,upperRight,middleLeft,middleRight,lowerLeft,lower,lowerRight";
+    var self = this;
+
+    return neighbours.split(",").map(function (neighbourPosition) {
+        return self[neighbourPosition](x, y);
+    });
+};
+
 Game.prototype.upperLeft = function (x, y) {
     return this.elementAt(x - 1, y - 1);
 };
@@ -73,35 +104,6 @@ Game.prototype.lowerRight = function (x, y) {
     return this.elementAt(x + 1, y + 1);
 };
 
-Game.prototype.neighboursOf = function (x, y) {
-    var neighbours = "upperLeft,upper,upperRight,middleLeft,middleRight,lowerLeft,lower,lowerRight";
-    var self = this;
-
-    return neighbours.split(",").map(function (fn) self[fn](x, y));
-};
-
-Game.prototype.neighboursNumber = function (x, y) {
-    return this.neighboursOf(x, y).sum();
-};
-
-(function () {
-    var A_DEAD_CELL           = 0,
-        A_LIVE_CELL           = 1,
-        WITH_TWO_NEIGHBOURS   = 2,
-        WITH_THREE_NEIGHBOURS = 3,
-        BECOMES_ALIVE         = 1;;
-
-    Game.rules = {0:{}, 1:{}};
-
-    Game.rules[A_DEAD_CELL][WITH_THREE_NEIGHBOURS] = BECOMES_ALIVE;
-    Game.rules[A_LIVE_CELL][WITH_TWO_NEIGHBOURS]   = BECOMES_ALIVE;
-    Game.rules[A_LIVE_CELL][WITH_THREE_NEIGHBOURS] = BECOMES_ALIVE;
-})();
-
-Game.prototype.applySurvivalRules = function (currentCell, x, y) {
-    var totalNeighbours = this.neighboursNumber(x, y);
-    return Game.rules[currentCell][totalNeighbours] || 0;
-};
 
 var render = function (game) {
     return game.mapCells(function (cell, i, j) cell === 1 ? "X" : "-")
