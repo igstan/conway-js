@@ -6,7 +6,7 @@
 pre {
  color: #e0e0e0;
  margin: 50px;
- font-size: 250%;
+ font-size: 200%;
  font-weight: bold;
  letter-spacing: 10px;
 }
@@ -17,7 +17,30 @@ pre span {
 </head>
 <body>
 
+Patterns:
+<select id="patterns">
+    <optgroup label="Still lives">
+        <option>block</option>
+        <option>beehive</option>
+    </optgroup>
+    <optgroup label="Oscillators">
+        <option>blinker</option>
+        <option>toad</option>
+        <option>beacon</option>
+        <option>pulsar</option>
+    </optgroup>
+    <optgroup label="Spaceships">
+        <option>glider</option>
+        <option>lwss</option>
+    </optgroup>
+    <optgroup label="Special">
+        <option value="gospelgun" selected="selected">Gosper glider gun</option>
+    </optgroup>
+</select>
+
+<button id="play">Play</button>
 <button id="next">Next Generation</button>
+<span>Wikipedia: <a href="http://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Conway's Game of Life</a></span>
 <hr>
 <pre id="panel"></pre>
 
